@@ -1,0 +1,32 @@
+<div class="mt-2">
+  <mat-table [dataSource]="users" class="mat-elevation-z8">
+  
+    <ng-container matColumnDef="userId">
+      <mat-header-cell *matHeaderCellDef>User Id </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.userId}} </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef>First name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.firstName}} </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell *matHeaderCellDef>Last name</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.lastName}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="dateOfBirth">
+      <mat-header-cell *matHeaderCellDef>Date of birth</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.dateOfBirth}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="dlNumber">
+      <mat-header-cell *matHeaderCellDef>Dl number</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.dlNumber}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
