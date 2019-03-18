@@ -13,7 +13,7 @@ import { CarsListComponent } from './cars-list/cars-list.component';
 import { OrdersListComponent } from './orders-list/orders-list.component';
 import { ModelModule } from './models/model.module';
 import { OrderEditorComponent } from './orders-list/order-editor/order-editor.component';
-import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { OrderDetailsComponent } from './orders-list/order-details/order-details.component';
 
 @NgModule({ 
   declarations: [
@@ -23,7 +23,7 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
     CarsListComponent,
     OrdersListComponent,
     OrderEditorComponent,
-    OrderDetailComponent,
+    OrderDetailsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

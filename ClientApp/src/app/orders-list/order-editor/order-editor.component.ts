@@ -21,7 +21,6 @@ export class OrderEditorComponent implements OnInit {
   cars: Car[];
 
   ngOnInit() {
-    // this.order=null;
     this.repo.getCars()
       .subscribe(res =>
         this.cars = res);

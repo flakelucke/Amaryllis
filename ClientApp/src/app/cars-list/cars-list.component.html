@@ -1,32 +1,32 @@
 <div class="mt-2">
-  <mat-table [dataSource]="cars" class="mat-elevation-z8">
+  <mat-table [dataSource]="dataSource"  matSort class="mat-elevation-z8">
     <ng-container matColumnDef="carId">
-      <mat-header-cell *matHeaderCellDef> Car Id </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Car Id </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.carId}} </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="model">
-      <mat-header-cell *matHeaderCellDef> Model </mat-header-cell>
+    <ng-container matColumnDef="model.model">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Model </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.model.model}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="whoManufacturerCar">
-      <mat-header-cell *matHeaderCellDef> Year of issue </mat-header-cell>
+    <ng-container matColumnDef="whoManufacturerCar.whoManufacturer">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Who manufacturer car</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.whoManufacturerCar?.whoManufacturer}} </mat-cell>
     </ng-container>
     
-    <ng-container matColumnDef="carClass">
-      <mat-header-cell *matHeaderCellDef> Class </mat-header-cell>
+    <ng-container matColumnDef="carClass.className">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Class </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.carClass.className}} </mat-cell>
     </ng-container>
   
     <ng-container matColumnDef="yearOfIssue">
-      <mat-header-cell *matHeaderCellDef> Year of issue </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Year of issue </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.yearOfIssue}} </mat-cell>
     </ng-container>
     
 
     <ng-container matColumnDef="registrationNumber">
-      <mat-header-cell *matHeaderCellDef>Registration number</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Registration number</mat-header-cell>
       <mat-cell *matCellDef="let element"> 
         <p>{{element.registrationNumber}}</p>
       </mat-cell>
@@ -35,4 +35,5 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
+  <mat-paginator [length]="dataSource?.length" [pageSizeOptions]="[10, 20,40]" showFirstLastButtons></mat-paginator>
 </div>

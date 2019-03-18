@@ -1,4 +1,11 @@
-import { MatButtonModule, MatCheckboxModule, MatSidenavModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatSidenavModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatInputModule
+} from '@angular/material';
 import { NgModule } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,7 +21,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatSidenavModule,
     MatMenuModule,
     MatTableModule,
-    MatSelectModule],
+    MatSelectModule,
+    MatPaginatorModule,
+    MatInputModule,
+    MatSortModule],
   exports: [
     BrowserAnimationsModule,
     MatButtonModule,
@@ -23,7 +33,10 @@ import { MatSelectModule } from '@angular/material/select';
     BrowserAnimationsModule,
     MatMenuModule,
     MatTableModule,
-    MatSelectModule],
+    MatSelectModule,
+    MatPaginatorModule,
+    MatInputModule,
+    MatSortModule],
 })
 
 export class MaterialModule { }

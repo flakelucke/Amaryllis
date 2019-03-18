@@ -17,7 +17,7 @@
   <mat-form-field>
     <mat-select placeholder="Select car" #car="ngModel" name="car" class="form-control" [ngModel]="order?.car" required
       (ngModelChange)="order.car=$event">
-      <mat-option [value]="order?.car" *ngIf="order">
+      <mat-option [value]="order?.car" *ngIf="order?.orderId!=undefined">
         {{order?.car?.registrationNumber}} {{order?.car?.whoManufacturerCar?.whoManufacturer}}
       </mat-option>
       <mat-option *ngFor="let car of cars" [value]="car">
@@ -28,7 +28,7 @@
   <mat-form-field>
     <mat-select placeholder="Select user" #user="ngModel" name="user" class="form-control" [ngModel]="order?.user"
       required (ngModelChange)="order.user=$event">
-      <mat-option [value]="order?.user" *ngIf="order">
+      <mat-option [value]="order?.user" *ngIf="order?.orderId!=undefined">
         {{order?.user?.firstName}} {{order?.user?.lastName}} dl number:{{order?.user?.dlNumber}}
       </mat-option>
       <mat-option *ngFor="let user of users" [value]="user">
