@@ -22,10 +22,13 @@ namespace Amaryllis.Controllers
             this.orderRepository = orderRepository;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<Order>> GetAllOrders()
+        [HttpPost]
+        public async Task<IEnumerable<Order>> GetAllOrders([FromQuery]string filter,[FromQuery] DateTime fromDate,[FromQuery] DateTime toDate)
         {
+            if(filter==null&&fromDate.ToString()=="1/1/01 12:00:00 AM"&&toDate.ToString()=="1/1/01 12:00:00 AM")
             return await orderRepository.GetAllOrdersAsync();
+            else 
+            return await orderRepository.GetFilterOrdersAsync(filter,fromDate,toDate);
         }
 
         [HttpGet("{id}")]
@@ -33,7 +36,7 @@ namespace Amaryllis.Controllers
             return await orderRepository.FindOrderByIdAsync(id);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateOrder([FromBody]OrderData data)
         {
             if (ModelState.IsValid)

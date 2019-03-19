@@ -18,7 +18,7 @@
 
     <ng-container matColumnDef="dateOfBirth">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Date of birth</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.dateOfBirth}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.dateOfBirth | date: 'longDate' }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="dlNumber">

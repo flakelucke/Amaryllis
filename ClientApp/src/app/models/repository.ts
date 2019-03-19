@@ -1,9 +1,12 @@
 import { Injectable } from "@angular/core";
-import { Http, RequestMethod, Request, Response } from "@angular/http";
-import { Router } from "@angular/router";
+import { Http, RequestMethod, Request, Response, RequestOptions,Headers } from "@angular/http";
+import { Router, Data } from "@angular/router";
 import { Observable } from "rxjs";
 import 'rxjs/add/operator/map';
 import { Order } from "./order.model";
+import { ContentType } from "@angular/http/src/enums";
+import { HttpHeaders,HttpClient } from '@angular/common/http';
+import { DatePipe } from "@angular/common";
 
 
 const userUrl = "/api/users";
@@ -25,8 +28,9 @@ export class Repository {
         return this.sendRequest(RequestMethod.Get, userUrl);
     }
 
-    getOrders() {
-        return this.sendRequest(RequestMethod.Get, orderUrl);
+    getOrders(filter?: string,fromDate?:Date,toDate?:Date) {
+            return this.sendRequest(RequestMethod.Post, orderUrl +(filter != null ? "?filter=" + filter : "")
+            +(fromDate != null ? "&&fromDate="+ fromDate.toLocaleString() : "") + ((toDate != null ? "&&toDate="+ toDate.toLocaleString() : "")));
     }
 
     getOrder(id: number) {
@@ -40,7 +44,7 @@ export class Repository {
             car: order.car,
             user: order.user
         }
-        return this.sendRequest(RequestMethod.Post, orderUrl, data);
+        return this.sendRequest(RequestMethod.Post, orderUrl+"/create", data);
     }
 
     deleteOrder(orderId: number) {
@@ -59,6 +63,7 @@ export class Repository {
     private sendRequest(verb: RequestMethod, url: string,
         data?: any): Observable<any> {
         return this.http.request(new Request({
+            headers:new Headers({ 'Content-Type': 'application/json' }),
             method: verb, url: url, body: data
         }))
             .map(response => {

@@ -5,66 +5,81 @@
         <i class="far fa-plus-square"></i>
       </button>
     </div>
-      <mat-form-field class="ml-2" style="width: 80%">
-        <input matInput (keyup)="applyFilter($event.target.value)"
-          placeholder="Filter">
-      </mat-form-field>
+    <mat-form-field class="ml-2" style="width: 45%">
+      <input matInput (keyup)="applyFilter($event.target.value,fromDate?.value,toDate?.value)" placeholder="Filter"
+        #filter>
+    </mat-form-field>
+    <div class="d-flex flex-row ml-2">
+      <div class="d-flex flex-column  ml-2">
+        <label class="mb-1">From</label>
+        <input  [ngModel]="fromDate" class="example-full-width form-control" type="datetime-local"
+          placeholder="From" (ngModelChange)="fromDateEv($event,toDate?.value,filter?.value)" required #fromDate>
+      </div>
+      <div class="d-flex flex-column ml-2">
+          <label class="mb-1">To</label>
+      <input  [ngModel]="toDate" class="example-full-width form-control" type="datetime-local" placeholder="To"
+        (ngModelChange)="toDateEv($event,fromDate?.value,filter?.value)" required #toDate>
+    </div>
   </div>
-  <div class="mt-1">
-    <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-      <ng-container matColumnDef="orderId">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Order Id </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <button class="btn btn-outline-info btn-sm mr-2" [routerLink]="['/order/detail', element.orderId]">
-            <i class="fas fa-info-circle"></i>
-          </button>
-          {{element.orderId}}
-        </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="startOfRental">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Start of rental </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.startOfRental}} </mat-cell>
-      </ng-container>
+</div>
+<div class="mt-1">
+  <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="info">
+      <mat-header-cell *matHeaderCellDef mat-sort-header style="flex:  0 0 75px"> </mat-header-cell>
+      <mat-cell *matCellDef="let element" style="flex: 0 0 75px">
+        <button class="btn btn-outline-info btn-sm mr-2" [routerLink]="['/order/detail', element.orderId]">
+          <i class="fas fa-info-circle"></i>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="startOfRental">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Start of rental </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.startOfRental | date:'short'}} </mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="endOfRental">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>End of rental </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.endOfRental}} </mat-cell>
-      </ng-container>
+    <ng-container matColumnDef="endOfRental">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>End of rental </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.endOfRental | date:'short'}} </mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="comment">
-        <mat-header-cell *matHeaderCellDef>Comment </mat-header-cell>
-        <mat-cell style="height: 10px" *matCellDef="let element"> {{element.comment}} </mat-cell>
-      </ng-container>
+    <ng-container matColumnDef="car.whoManufacturerCar.whoManufacturer">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Who manufactuter </mat-header-cell>
+      <mat-cell style="height: 10px" *matCellDef="let element"> {{element.car.whoManufacturerCar.whoManufacturer}}
+      </mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="car.model.model" style="width:120px">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Car model</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.car.model.model}} </mat-cell>
-      </ng-container>
+    <ng-container matColumnDef="car.model.model" style="width:120px">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Car model</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.car.model.model}} </mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="user.name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>User</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <p>{{element.user.firstName}} {{element.user.lastName}}</p>
-          <button class="btn btn-outline-info btn-sm mr-2 ml-2"
-            (click)="selectOrder(element.orderId); tableMode = false">
-            <i class="fas fa-edit"></i>
-          </button>
-          <button class="btn btn-outline-danger btn-sm" (click)="deleteOrder(element.orderId);">
-            <i class="fas fa-trash-alt"></i>
-          </button>
-        </mat-cell>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
-    <mat-paginator [length]="dataSource?.length" [pageSizeOptions]="[10, 20,40]" showFirstLastButtons></mat-paginator>
-  </div>
+    <ng-container matColumnDef="user.firstName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>User</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <p>{{element.user.firstName}} {{element.user.lastName}}</p>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="details">
+      <mat-header-cell *matHeaderCellDef mat-sort-header style="flex:  0 0 120px"> </mat-header-cell>
+      <mat-cell *matCellDef="let element" style="flex: 0 0 120px">
+        <button class="btn btn-outline-info btn-sm mr-2 ml-2" (click)="selectOrder(element.orderId); tableMode = false">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn btn-outline-danger btn-sm" (click)="deleteOrder(element.orderId);">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator [length]="dataSource?.length" [pageSizeOptions]="[10, 20,40]" showFirstLastButtons></mat-paginator>
+</div>
 
 </div>
 <ng-template #create>
   <app-order-editor [order]="order"></app-order-editor>
-  <button class="btn btn-primary mr-1" (click)="saveOrder()">
+  <button [disabled]="" class="btn btn-primary mr-1" (click)="saveOrder()">
     Save
   </button>
   <button class="btn btn-info" (click)="clearOrder()">

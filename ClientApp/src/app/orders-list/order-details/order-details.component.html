@@ -17,7 +17,7 @@
       <ul class="list-group">
         <p class="user"><b>User:</b></p>
         <li class="list-group-item"><b>User name:</b> {{order?.user.firstName}} {{order?.user.lastName}} </li>
-        <li class="list-group-item"><b>User date of birth:</b> {{order?.user.dateOfBirth |  date:'medium'}}</li>
+        <li class="list-group-item"><b>User date of birth:</b> {{order?.user.dateOfBirth | date: 'longDate'}}</li>
         <li class="list-group-item"><b>User dl number:</b> {{order?.user.dlNumber}}</li>
       </ul>
     </div>

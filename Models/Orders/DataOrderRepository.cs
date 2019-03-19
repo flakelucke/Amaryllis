@@ -63,15 +63,57 @@ namespace Amaryllis.Models.Orders
             .ToListAsync();
         }
 
+        public async Task<IEnumerable<Order>> GetFilterOrdersAsync(string filter, DateTime fromDate, DateTime toDate)
+        {
+            IEnumerable<Order> res;
+            if (filter != null)
+            {
+                res = await context.Orders
+               .Include(x => x.User)
+               .Include(x => x.Car)
+               .Include(x => x.Car.CarClass)
+               .Include(x => x.Car.Model)
+               .Include(x => x.Car.WhoManufacturerCar)
+               .Where(x => x.User.FirstName.Contains(filter) ||
+               x.User.LastName.Contains(filter) ||
+               x.Car.Model.Model.Contains(filter) ||
+               x.Car.WhoManufacturerCar.WhoManufacturer.Contains(filter))
+               .ToListAsync();
+                return await GetFilterOrdersByDateAsync(res, fromDate, toDate);
+            }
+            else
+            {
+                res = await GetAllOrdersAsync();
+                return await GetFilterOrdersByDateAsync(res, fromDate, toDate);
+            }
+        }
+
+        public async Task<IEnumerable<Order>> GetFilterOrdersByDateAsync(IEnumerable<Order> orders, DateTime fromDate, DateTime toDate)
+        {
+            if (fromDate.ToString() == "1/1/01 12:00:00 AM" && toDate.ToString() == "1/1/01 12:00:00 AM")
+            {
+                return orders;
+            }
+            else if (fromDate.ToString() == "1/1/01 12:00:00 AM" && toDate.ToString() != "1/1/01 12:00:00 AM")
+            {
+                return orders.Where(x => x.EndOfRental < toDate);
+            }
+            else if (fromDate.ToString() != "1/1/01 12:00:00 AM" && toDate.ToString() == "1/1/01 12:00:00 AM")
+            {
+                return orders.Where(x => x.StartOfRental > fromDate);
+            }
+            else return orders.Where(x => x.StartOfRental > fromDate && x.EndOfRental < toDate);
+        }
+
         public async Task UpdateOrderAsync(Order order)
         {
-           
+
             context.Attach(order.User);
             context.Attach(order.Car);
             context.Attach(order.Car.Model);
             context.Attach(order.Car.CarClass);
             context.Attach(order.Car.WhoManufacturerCar);
-            context.Update(order);       
+            context.Update(order);
             await context.SaveChangesAsync();
         }
     }

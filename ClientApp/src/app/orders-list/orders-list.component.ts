@@ -4,6 +4,7 @@ import { Order } from '../models/order.model';
 import { Car } from '../models/car.model/car.model';
 import { User } from '../models/user.model';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-orders-list',
@@ -15,8 +16,9 @@ export class OrdersListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @Input() validStates: any;
 
-  displayedColumns: string[] = ['orderId', 'startOfRental', 'endOfRental', 'comment', 'car.model.model', 'user.name'];
+  displayedColumns: string[] = ['info', 'startOfRental', 'endOfRental', 'car.whoManufacturerCar.whoManufacturer', 'car.model.model', 'user.firstName','details'];
   orders: Order[];
   users: User[];
   cars: Car[];
@@ -25,6 +27,17 @@ export class OrdersListComponent implements OnInit {
   dataSource = new MatTableDataSource<object>(this.orders);
 
   constructor(private repo: Repository) {
+  }
+
+  applyFilter(filterValue: string,fromDate?:Date,toDate?:Date) {
+    this.getOrders(filterValue.toLocaleUpperCase(),fromDate,toDate);
+  }
+
+  fromDateEv(event?,toDate?:Date,filterValue?:string){
+    this.getOrders(filterValue,event,toDate);
+  }
+  toDateEv(event?,fromDate?:Date,filterValue?:string){
+    this.getOrders(filterValue,fromDate,event);
   }
 
   deleteOrder(id: number) {
@@ -49,13 +62,14 @@ export class OrdersListComponent implements OnInit {
     }
     this.clearOrder();
   }
-  getOrders() {
-    this.repo.getOrders().subscribe(res => {
+  getOrders(filter?:string,fromDate?:Date,toDate?:Date) {
+    this.repo.getOrders(filter,fromDate,toDate).subscribe(res => {
       this.orders = res;
       this.dataSource.data = this.orders;
       this.dataSource.sort = this.sort;
     });
   }
+
   clearOrder() {
     this.order = new Order();
     this.tableMode = true;
@@ -65,6 +79,7 @@ export class OrdersListComponent implements OnInit {
     this.tableMode = true;
     this.getOrders();
   }
+
   ngAfterViewInit() {
     this.dataSource.sortingDataAccessor = (item, property) => {
       if (property.includes('.')) return property.split('.').reduce((o, i) => o[i], item)

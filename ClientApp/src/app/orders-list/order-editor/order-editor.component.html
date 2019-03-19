@@ -1,6 +1,6 @@
 <h1 class="mt-3" style="text-align: center">Order</h1>
 <div class="d-flex flex-column mt-4">
-  <div class="d-flex flex-row">
+  <div  class="d-flex flex-row">
     <div class="d-flex flex-column mb-1 mr-5">
       <label for="">Start of rental date</label>
       <input class="example-full-width" type="datetime-local" placeholder="start date" #startOfRental="ngModel"
@@ -18,26 +18,31 @@
     <mat-select placeholder="Select car" #car="ngModel" name="car" class="form-control" [ngModel]="order?.car" required
       (ngModelChange)="order.car=$event">
       <mat-option [value]="order?.car" *ngIf="order?.orderId!=undefined">
-        {{order?.car?.registrationNumber}} {{order?.car?.whoManufacturerCar?.whoManufacturer}}
+          <b>Reg number:</b> {{order?.car?.registrationNumber}} <b>Who manufacturer:</b>{{order?.car?.whoManufacturerCar?.whoManufacturer}}
       </mat-option>
       <mat-option *ngFor="let car of cars" [value]="car">
-        {{car?.registrationNumber}} {{car?.whoManufacturerCar.whoManufacturer}}
+       <b>Reg number: </b> {{car?.registrationNumber}} <b>Who manufacturer: </b> {{car?.whoManufacturerCar.whoManufacturer}}
       </mat-option>
     </mat-select>
+    <mat-error *ngIf="car.invalid">Please select car </mat-error>
   </mat-form-field>
   <mat-form-field>
     <mat-select placeholder="Select user" #user="ngModel" name="user" class="form-control" [ngModel]="order?.user"
       required (ngModelChange)="order.user=$event">
       <mat-option [value]="order?.user" *ngIf="order?.orderId!=undefined">
-        {{order?.user?.firstName}} {{order?.user?.lastName}} dl number:{{order?.user?.dlNumber}}
+        {{order?.user?.firstName}} {{order?.user?.lastName}} <b>dl number:  </b>{{order?.user?.dlNumber}}
       </mat-option>
       <mat-option *ngFor="let user of users" [value]="user">
-        {{user?.firstName}} {{user?.lastName}} dl number:{{user?.dlNumber}}
+        {{user?.firstName}} {{user?.lastName}}, <b>dl number:</b>{{user?.dlNumber}}
       </mat-option>
     </mat-select>
+    <mat-error *ngIf="user.invalid">Please select user </mat-error>
   </mat-form-field>
-  <div class="mt-3 mb-2">
+  <div class="mt-3 mb-4">
     <textarea placeholder="Leave a comment" rows="5" cols="100" #comment="ngModel" name="comment" class="form-control"
       [ngModel]="order?.comment" (ngModelChange)="order.comment=$event" required></textarea>
+      <div *ngIf="comment.invalid" class="text-danger mt-1">
+        Please enter comment
+    </div>
   </div>
 </div>

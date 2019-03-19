@@ -1,5 +1,5 @@
 .list-group-item b{
- color: seagreen;
+ color: seagreen !important;
  font-family: 'Times New Roman', Times, serif;
 }
 .list-group-item {
@@ -9,11 +9,12 @@
     font-size: 1.6em;
 }
 ul li {
+    color: blue;
     font-size: 1.2em;
     border-radius: 5px;
-    text-shadow: 0px 1px;
 }
 .order>p {
+    color: blue;
     font-size: 1.2em;
     border-radius: 5px;
 }
@@ -23,8 +24,7 @@ ul li {
     border-radius: 10px;
 }
 .comment {
-    font-size: 0.9em !important;
-    word-spacing: 4px;
+    font-size: 1em !important;
     letter-spacing: 0.5px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
 }

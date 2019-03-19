@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Amaryllis.Models.BindingTargets;
@@ -12,5 +13,7 @@ namespace Amaryllis.Models.Orders
          Task<Order> FindOrderByIdAsync(long id);
          Task UpdateOrderAsync(Order order);
          Task<IEnumerable<Order>> GetAllOrdersAsync();
+         Task<IEnumerable<Order>> GetFilterOrdersAsync(string filter,DateTime fromDate,DateTime toDate);
+         Task<IEnumerable<Order>> GetFilterOrdersByDateAsync(IEnumerable<Order> orders,DateTime fromDate,DateTime toDate);
     }
 }

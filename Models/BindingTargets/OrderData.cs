@@ -10,7 +10,6 @@ namespace Amaryllis.Models.BindingTargets
     {
         [Required]
         public DateTime StartOfRental { get; set; }
-        [Required]
         public DateTime EndOfRental { get; set; }
         [Required]
         public string Comment { get; set; }
