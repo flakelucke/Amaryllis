@@ -2,7 +2,10 @@ import { Injectable } from "@angular/core";
 import { Http, RequestMethod, Request, Response, RequestOptions,Headers } from "@angular/http";
 import { Router, Data } from "@angular/router";
 import { Observable } from "rxjs";
+
+//npm install --save rxjs-compat для использования map
 import 'rxjs/add/operator/map';
+
 import { Order } from "./order.model";
 import { ContentType } from "@angular/http/src/enums";
 import { HttpHeaders,HttpClient } from '@angular/common/http';
